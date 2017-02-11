@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MobileASPTest.Interfaces;
 using MobileASPTest.Services;
+using MobileASPTest.Models;
 
 namespace MobileASPTest
 {

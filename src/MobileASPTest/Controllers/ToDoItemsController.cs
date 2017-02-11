@@ -27,7 +27,8 @@ namespace MobileASPTest.Controllers
             return Ok(_toDoRepository.All);
         }
 
-        [HttpPost("{id}")]
+        [HttpPost]
+        [Route("[action]")]
         public IActionResult Create(string id, [FromBody]ToDoItem item)
         {
             try
@@ -43,14 +44,15 @@ namespace MobileASPTest.Controllers
                 }
                 _toDoRepository.Insert(item);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return BadRequest(ErrorCode.CouldNotCreateItem.ToString());
             }
             return Ok(item);
         }
 
-        [HttpPost("{id}")]
+        [HttpPut]
+        [Route("[action]")]
         public IActionResult Edit(string id, [FromBody]ToDoItem item)
         {
             try
@@ -59,8 +61,8 @@ namespace MobileASPTest.Controllers
                 {
                     return BadRequest(ErrorCode.TodoItemNameAndNotesRequired.ToString());
                 }
-                var existingItem = _toDoRepository.DoesItemExist(item.ID);
-                if (existingItem)
+                var existingItem = _toDoRepository.Find(item.ID);
+                if (existingItem == null)
                 {
                     return NotFound(ErrorCode.RecordNotFound.ToString());
                 }
@@ -73,7 +75,8 @@ namespace MobileASPTest.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("[action]")]
         public IActionResult Delete(string id)
         {
             try
@@ -103,11 +106,11 @@ namespace MobileASPTest.Controllers
         }
 
 
-
+        /*
         // GET: /<controller>/
         public IActionResult Index()
         {
             return View();
-        }
+        }*/
     }
 }
